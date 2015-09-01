@@ -1,0 +1,2 @@
+# TextureBatchPacker
+以命令行方式调用TexturePacker批量处理整个美术资源目录。
