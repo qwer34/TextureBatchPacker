@@ -25,7 +25,7 @@ namespace TextureBatchPacker
 		[ArgDefaultValue("Editor"), ArgDescription("Packing mode - Editor, iOS, Android.")]
 		public string Mode { get; set; }
 
-		[ArgDefaultValue(0.5), ArgDescription("Scale factor.")]
+		[ArgDefaultValue(1.0), ArgDescription("Scale factor.")]
 		public float Scale { get; set; }
 
 		[ArgDefaultValue(false), ArgDescription("Removes image file extensions from the sprite names - e.g. .png, .tga.")]
@@ -44,6 +44,26 @@ namespace TextureBatchPacker
 			Console.WriteLine("TrimSpriteNames: {0}", TrimSpriteNames);
 			Console.WriteLine("InputDirectory: {0}", InputDirectory);
 			Console.WriteLine("OutputDirectory: {0}", OutputDirectory);
+
+			TexturePackerCaller texturePackerCaller;
+			string strModeLower = Mode.Trim().ToLower();
+
+			switch (strModeLower)
+			{
+				case "ios":
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale);
+					break;
+				case "android":
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale);
+					break;
+				default:
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale);
+					break;
+			}
+
+			texturePackerCaller.ScanDir(new DirectoryInfo(InputDirectory), new DirectoryInfo(OutputDirectory));
+			texturePackerCaller.DumpTODOs();
+			texturePackerCaller.Pack();
 		}
 	}
 
@@ -89,18 +109,25 @@ namespace TextureBatchPacker
 
 			try
 			{
-				//string[] newArgs = { "-t", "True", "-i", "C:\\", "-o", "D:\\" };
-				string[] newArgs = { "--help" };
-				Args.InvokeMain<TextureBatchPackerArgs>(newArgs);
+				string[] newArgs =
+				{
+					"-I",
+					@"E:\Proj\wwii_resource\PicRes_Input\Packed",
+					"-O",
+					@"C:\TEMP\out",
+					"-S",
+					"0.5"
+				};
+				Args.InvokeMain<TextureBatchPackerArgs>(args);
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
-			}
-
 #if DEBUG
-			Console.ReadKey();
+				Console.ReadKey();
 #endif
+				return -1;
+			}
 
 			return 0;
 		}
