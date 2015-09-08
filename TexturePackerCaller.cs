@@ -24,6 +24,8 @@ namespace TextureBatchPacker
 			PNG_4444 = 0,
 			PVR_ALPHA,
 			PVR_NOALPHA,
+			PVR_CCZ_ALPHA,
+			PVR_CCZ_NOALPHA,
 			JPG_565,
 			WEBP_4444,
 			PKM,
@@ -84,8 +86,8 @@ namespace TextureBatchPacker
 			switch (PackingMode)
 			{
 				case PACKING_MODE.IOS:
-					TextureFormatAlpha = TEXTURE_FORMAT.PVR_ALPHA;
-					TextureFormatNoAlpha = TEXTURE_FORMAT.PVR_NOALPHA;
+					TextureFormatAlpha = TEXTURE_FORMAT.PVR_CCZ_ALPHA;
+					TextureFormatNoAlpha = TEXTURE_FORMAT.PVR_CCZ_NOALPHA;
 					break;
 				case PACKING_MODE.ANDROID:
 					TextureFormatAlpha = TEXTURE_FORMAT.WEBP_4444;
