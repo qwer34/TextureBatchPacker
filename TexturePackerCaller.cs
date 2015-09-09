@@ -22,6 +22,7 @@ namespace TextureBatchPacker
 		public enum TEXTURE_FORMAT
 		{
 			PNG_4444 = 0,
+			PNG_565,
 			PVR_ALPHA,
 			PVR_NOALPHA,
 			PVR_CCZ_ALPHA,
@@ -95,7 +96,7 @@ namespace TextureBatchPacker
 					break;
 				default:
 					TextureFormatAlpha = TEXTURE_FORMAT.PNG_4444;
-					TextureFormatNoAlpha = TEXTURE_FORMAT.PNG_4444;
+					TextureFormatNoAlpha = TEXTURE_FORMAT.PNG_565;
 					break;
 			}
 
@@ -222,7 +223,7 @@ namespace TextureBatchPacker
 				Process processTP = new Process();
 
 				processTP.StartInfo.FileName = "TexturePacker.exe";
-				processTP.StartInfo.Arguments = GetTexturePackerArguments_PNG_4444(parameters);
+				processTP.StartInfo.Arguments = GetTexturePackerArguments(parameters);
 
 				//将cmd的标准输入和输出全部重定向到.NET的程序里
 				processTP.StartInfo.UseShellExecute = false; //此处必须为false否则引发异常
