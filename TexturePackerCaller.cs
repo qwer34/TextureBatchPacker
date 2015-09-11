@@ -21,7 +21,8 @@ namespace TextureBatchPacker
 
 		public enum TEXTURE_FORMAT
 		{
-			PNG_4444 = 0,
+			PNG_8888 = 0,
+			PNG_4444,
 			PNG_565,
 			PVR_ALPHA,
 			PVR_NOALPHA,
