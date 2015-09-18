@@ -23,13 +23,20 @@ namespace TextureBatchPacker
 		{
 			PNG_8888 = 0,
 			PNG_4444,
+			PNG_888,
 			PNG_565,
-			PVR_ALPHA,
-			PVR_NOALPHA,
-			PVR_CCZ_ALPHA,
-			PVR_CCZ_NOALPHA,
+			PNG_INDEXED,
+			PVR_CCZ_TC4_ALPHA,
+			PVR_CCZ_TC4_NOALPHA,
+			PVR_CCZ_TC2_ALPHA,
+			PVR_CCZ_TC2_NOALPHA,
+			PVR_CCZ_4444,
+			PVR_CCZ_565,
+			JPG_888,
 			JPG_565,
+			WEBP_8888,
 			WEBP_4444,
+			WEBP_888,
 			PKM,
 			END_OF_ENUM
 		};
@@ -76,8 +83,12 @@ namespace TextureBatchPacker
 
 		private static readonly int ProcessorCount = Environment.ProcessorCount;
 		private static string[] ConverterLocks;
-		private TEXTURE_FORMAT TextureFormatAlpha;
-		private TEXTURE_FORMAT TextureFormatNoAlpha;
+		private TEXTURE_FORMAT TextureFormat_Alpha_HQ;
+		private TEXTURE_FORMAT TextureFormat_Alpha_SQ;
+		private TEXTURE_FORMAT TextureFormat_Alpha_LQ;
+		private TEXTURE_FORMAT TextureFormat_NoAlpha_HQ;
+		private TEXTURE_FORMAT TextureFormat_NoAlpha_SQ;
+		private TEXTURE_FORMAT TextureFormat_NoAlpha_LQ;
 		private HashSet<ConvertionParameters> TODOs = new HashSet<ConvertionParameters>();
 
 		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1)
@@ -88,16 +99,28 @@ namespace TextureBatchPacker
 			switch (PackingMode)
 			{
 				case PACKING_MODE.IOS:
-					TextureFormatAlpha = TEXTURE_FORMAT.PVR_CCZ_ALPHA;
-					TextureFormatNoAlpha = TEXTURE_FORMAT.PVR_CCZ_NOALPHA;
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_ALPHA;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_NOALPHA;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_NOALPHA;
 					break;
 				case PACKING_MODE.ANDROID:
-					TextureFormatAlpha = TEXTURE_FORMAT.WEBP_4444;
-					TextureFormatNoAlpha = TEXTURE_FORMAT.PKM;
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_8888;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_8888;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PKM;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PKM;
 					break;
 				default:
-					TextureFormatAlpha = TEXTURE_FORMAT.PNG_4444;
-					TextureFormatNoAlpha = TEXTURE_FORMAT.PNG_565;
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PNG_INDEXED;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PNG_INDEXED;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.JPG_888;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.JPG_888;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.JPG_888;
 					break;
 			}
 
@@ -134,7 +157,7 @@ namespace TextureBatchPacker
 			}
 			else if (srcDir.Name.EndsWith(".plist"))
 			{
-				if(dstDir.Name.EndsWith(".plist"))
+				if (dstDir.Name.EndsWith(".plist"))
 				{
 					dstDir = dstDir.Parent;
 				}
@@ -142,14 +165,16 @@ namespace TextureBatchPacker
 				ConvertionParameters parameters = new ConvertionParameters(
 					srcDir,
 					dstDir,
-					TextureFormatAlpha,
+					TextureFormat_Alpha_SQ,
 					Scale);
+
+				bool noAlpha = false;
 
 				foreach (FileInfo subFile in srcDir.GetFiles())
 				{
 					if ("noalpha.txt" == subFile.Name)
 					{
-						parameters.TextureFormat = TextureFormatNoAlpha;
+						noAlpha = true;
 					}
 					else if ("lq.txt" == subFile.Name)
 					{
@@ -162,6 +187,37 @@ namespace TextureBatchPacker
 					else if ("notrim.txt" == subFile.Name)
 					{
 						parameters.NoTrim = true;
+					}
+				}
+
+				if (noAlpha)
+				{
+					switch (parameters.TextureQuality)
+					{
+						case TEXTURE_QUALITY.HIGH:
+							parameters.TextureFormat = TextureFormat_NoAlpha_HQ;
+							break;
+						case TEXTURE_QUALITY.LOW:
+							parameters.TextureFormat = TextureFormat_NoAlpha_LQ;
+							break;
+						default:
+							parameters.TextureFormat = TextureFormat_NoAlpha_SQ;
+							break;
+					}
+				}
+				else
+				{
+					switch (parameters.TextureQuality)
+					{
+						case TEXTURE_QUALITY.HIGH:
+							parameters.TextureFormat = TextureFormat_Alpha_HQ;
+							break;
+						case TEXTURE_QUALITY.LOW:
+							parameters.TextureFormat = TextureFormat_Alpha_LQ;
+							break;
+						default:
+							parameters.TextureFormat = TextureFormat_Alpha_SQ;
+							break;
 					}
 				}
 
