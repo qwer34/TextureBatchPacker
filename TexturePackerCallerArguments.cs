@@ -17,7 +17,7 @@ namespace TextureBatchPacker
 				case TEXTURE_FORMAT.PNG_4444:
 					return GetTexturePackerArguments_PNG_4444(parameters);
 				case TEXTURE_FORMAT.PNG_888:
-				//return GetTexturePackerArguments_PNG_888(parameters);
+					return GetTexturePackerArguments_PNG_888(parameters);
 				case TEXTURE_FORMAT.PNG_565:
 					return GetTexturePackerArguments_PNG_565(parameters);
 				default:
