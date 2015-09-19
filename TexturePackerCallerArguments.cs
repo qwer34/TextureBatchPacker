@@ -8,7 +8,7 @@ namespace TextureBatchPacker
 {
 	partial class TexturePackerCaller
 	{
-		private string GetTexturePackerArguments(ConvertionParameters parameters)
+		private static string GetTexturePackerArguments(ConvertionParameters parameters)
 		{
 			switch (parameters.TextureFormat)
 			{
@@ -20,6 +20,12 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_PNG_888(parameters);
 				case TEXTURE_FORMAT.PNG_565:
 					return GetTexturePackerArguments_PNG_565(parameters);
+				case TEXTURE_FORMAT.PNG_INDEXED:
+					return GetTexturePackerArguments_PNG_INDEXED(parameters);
+				case TEXTURE_FORMAT.JPG_888:
+					return GetTexturePackerArguments_JPG_888(parameters);
+				case TEXTURE_FORMAT.JPG_565:
+					return GetTexturePackerArguments_JPG_565(parameters);
 				default:
 					return GetTexturePackerArguments_PNG_INDEXED(parameters);
 			}

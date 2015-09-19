@@ -19,7 +19,7 @@ namespace TextureBatchPacker
 			END_OF_ENUM
 		};
 
-		public enum TEXTURE_FORMAT
+		private enum TEXTURE_FORMAT
 		{
 			PNG_8888 = 0,
 			PNG_4444,
@@ -41,7 +41,7 @@ namespace TextureBatchPacker
 			END_OF_ENUM
 		};
 
-		public enum TEXTURE_QUALITY
+		private enum TEXTURE_QUALITY
 		{
 			LOW = 0,
 			STANDARD,
@@ -63,7 +63,7 @@ namespace TextureBatchPacker
 			public ConvertionParameters(
 				DirectoryInfo srcDir,
 				DirectoryInfo dstDir,
-				TEXTURE_FORMAT textureFormat = TEXTURE_FORMAT.PNG_4444,
+				TEXTURE_FORMAT textureFormat = TEXTURE_FORMAT.PNG_INDEXED,
 				float scale = 1.0f,
 				TEXTURE_QUALITY textureQuality = TEXTURE_QUALITY.STANDARD,
 				bool noTrim = false
