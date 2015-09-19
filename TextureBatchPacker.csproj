@@ -49,8 +49,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TexturePackerCaller.cs" />
     <Compile Include="TexturePackerCallerArguments.cs" />
-    <Compile Include="TexturePackerCallerArgumentsJPG.cs" />
-    <Compile Include="TexturePackerCallerArgumentsPNG.cs" />
+    <Compile Include="TexturePackerCallerArguments_JPG.cs" />
+    <Compile Include="TexturePackerCallerArguments_PKM.cs" />
+    <Compile Include="TexturePackerCallerArguments_PNG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

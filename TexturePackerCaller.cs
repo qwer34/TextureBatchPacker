@@ -35,7 +35,6 @@ namespace TextureBatchPacker
 			JPG_888,
 			JPG_565,
 			WEBP_8888,
-			WEBP_4444,
 			WEBP_888,
 			PKM,
 			END_OF_ENUM
@@ -110,7 +109,7 @@ namespace TextureBatchPacker
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_8888;
-					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PKM;
 					break;

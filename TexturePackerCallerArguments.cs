@@ -26,6 +26,8 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_JPG_888(parameters);
 				case TEXTURE_FORMAT.JPG_565:
 					return GetTexturePackerArguments_JPG_565(parameters);
+				case TEXTURE_FORMAT.PKM:
+					return GetTexturePackerArguments_PKM(parameters);
 				default:
 					return GetTexturePackerArguments_PNG_INDEXED(parameters);
 			}
