@@ -8,7 +8,7 @@ namespace TextureBatchPacker
 {
 	partial class TexturePackerCaller
 	{
-		private static string GetTexturePackerArguments(ConvertionParameters parameters)
+		private string GetTexturePackerArguments(ConvertionParameters parameters)
 		{
 			switch (parameters.TextureFormat)
 			{
@@ -34,6 +34,18 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_PKM(parameters);
 				default:
 					return GetTexturePackerArguments_PNG_INDEXED(parameters);
+			}
+		}
+
+		private string GetTrimSpriteNamesArgument()
+		{
+			if (TrimSpriteNames)
+			{
+				return "--trim-sprite-names ";
+			}
+			else
+			{
+				return "";
 			}
 		}
 	}

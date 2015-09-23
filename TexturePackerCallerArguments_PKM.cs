@@ -21,7 +21,7 @@ namespace TextureBatchPacker
 			}
 		}
 
-		private static string GetTexturePackerArguments_PKM(ConvertionParameters parameters)
+		private string GetTexturePackerArguments_PKM(ConvertionParameters parameters)
 		{
 			string plistFullPath;
 			string argument;
@@ -38,8 +38,9 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" --texture-format pkm --etc1-quality {1} --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d --data \"{0}\" {1}--texture-format pkm --etc1-quality {2} --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{4}\"",
 					plistFullPath,
+					GetTrimSpriteNamesArgument(),
 					GetPkmQuality(parameters),
 					parameters.Scale,
 					parameters.SrcDir.FullName);
@@ -47,8 +48,9 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" --texture-format pkm --etc1-quality {1} --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d --data \"{0}\" {1}--texture-format pkm --etc1-quality {2} --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{4}\"",
 					plistFullPath,
+					GetTrimSpriteNamesArgument(),
 					GetPkmQuality(parameters),
 					parameters.Scale,
 					parameters.SrcDir.FullName);

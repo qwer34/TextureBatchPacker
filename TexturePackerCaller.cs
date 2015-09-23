@@ -79,6 +79,7 @@ namespace TextureBatchPacker
 
 		public PACKING_MODE PackingMode { get; set; }
 		public float Scale { get; set; }
+		public bool TrimSpriteNames { get; set; }
 
 		private static readonly int ProcessorCount = Environment.ProcessorCount;
 		private static string[] ConverterLocks;
@@ -90,10 +91,11 @@ namespace TextureBatchPacker
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_LQ;
 		private HashSet<ConvertionParameters> TODOs = new HashSet<ConvertionParameters>();
 
-		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1)
+		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1, bool trimSpriteNames = false)
 		{
 			PackingMode = packingMode;
 			Scale = scale;
+			TrimSpriteNames = trimSpriteNames;
 
 			switch (PackingMode)
 			{
