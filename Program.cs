@@ -31,6 +31,9 @@ namespace TextureBatchPacker
 		[ArgDefaultValue(false), ArgDescription("Removes image file extensions from the sprite names - e.g. .png, .tga.")]
 		public bool TrimSpriteNames { get; set; }
 
+		[ArgDefaultValue(false), ArgShortcut("SLO"), ArgDescription("All PLISTs and sprite sheets will be exported to single direcory.")]
+		public bool SingleLevelOutput { get; set; }
+
 		[ArgRequired(PromptIfMissing = false), ArgExistingDirectory, ArgDescription("The input directory.")]
 		public string InputDirectory { get; set; }
 
@@ -42,6 +45,7 @@ namespace TextureBatchPacker
 			Console.WriteLine("Mode: {0}", Mode);
 			Console.WriteLine("Scale: {0}", Scale);
 			Console.WriteLine("TrimSpriteNames: {0}", TrimSpriteNames);
+			Console.WriteLine("SingleLevelOutput: {0}", SingleLevelOutput);
 			Console.WriteLine("InputDirectory: {0}", InputDirectory);
 			Console.WriteLine("OutputDirectory: {0}", OutputDirectory);
 
@@ -51,13 +55,13 @@ namespace TextureBatchPacker
 			switch (strModeLower)
 			{
 				case "ios":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;
 				case "android":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;
 				default:
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;
 			}
 
@@ -111,14 +115,18 @@ namespace TextureBatchPacker
 			{
 				string[] newArgs =
 				{
+					"-SLO",
+					"True",
+					"-T",
+					"True",
 					"-I",
-					@"E:\Proj\wwii_resource\PicRes_Input\Packed",
+					@"E:\Proj\wwii_resource\Res_Input\Packed",
 					"-O",
 					@"C:\TEMP\out",
 					"-S",
 					"0.5"
 				};
-				Args.InvokeMain<TextureBatchPackerArgs>(args);
+				Args.InvokeMain<TextureBatchPackerArgs>(newArgs);
 			}
 			catch (Exception ex)
 			{
@@ -128,6 +136,10 @@ namespace TextureBatchPacker
 #endif
 				return -1;
 			}
+
+#if DEBUG
+			Console.ReadKey();
+#endif
 
 			return 0;
 		}

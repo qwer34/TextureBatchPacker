@@ -59,6 +59,8 @@ namespace TextureBatchPacker
 
 			public int LockNumber = -1;
 
+			public string PlistFileName = null;
+
 			public ConvertionParameters(
 				DirectoryInfo srcDir,
 				DirectoryInfo dstDir,
@@ -80,6 +82,7 @@ namespace TextureBatchPacker
 		public PACKING_MODE PackingMode { get; set; }
 		public float Scale { get; set; }
 		public bool TrimSpriteNames { get; set; }
+		public bool SingleLevelOutput { get; set; }
 
 		private static readonly int ProcessorCount = Environment.ProcessorCount;
 		private static string[] ConverterLocks;
@@ -91,11 +94,12 @@ namespace TextureBatchPacker
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_LQ;
 		private HashSet<ConvertionParameters> TODOs = new HashSet<ConvertionParameters>();
 
-		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1, bool trimSpriteNames = false)
+		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1, bool trimSpriteNames = false, bool singleLevelOutput = false)
 		{
 			PackingMode = packingMode;
 			Scale = scale;
 			TrimSpriteNames = trimSpriteNames;
+			SingleLevelOutput = singleLevelOutput;
 
 			switch (PackingMode)
 			{
@@ -138,6 +142,12 @@ namespace TextureBatchPacker
 
 		public void ScanDir(DirectoryInfo srcDir, DirectoryInfo dstDir)
 		{
+			if (SingleLevelOutput)
+			{
+				ScanDirSingleLevelOutput(srcDir, dstDir);
+				return;
+			}
+
 			string srcDirFullPath = srcDir.FullName;
 
 			if (!srcDirFullPath.EndsWith("\\"))
@@ -242,6 +252,100 @@ namespace TextureBatchPacker
 
 						ScanDir(subDir, dstSubDir);
 					}
+				}
+			}
+		}
+
+		public void ScanDirSingleLevelOutput(DirectoryInfo srcDir, DirectoryInfo dstDir, string relativePath = "")
+		{
+			string srcDirFullPath = srcDir.FullName;
+
+			if (!srcDirFullPath.EndsWith("\\"))
+			{
+				srcDirFullPath += "\\";
+			}
+
+			if (!dstDir.Exists)
+			{
+				dstDir.Create();
+			}
+
+			if (srcDir.Name.StartsWith("."))
+			{
+				return;
+			}
+			else if (srcDir.Name.EndsWith(".plist"))
+			{
+				ConvertionParameters parameters = new ConvertionParameters(
+					srcDir,
+					dstDir,
+					TextureFormat_Alpha_SQ,
+					Scale);
+
+				parameters.PlistFileName = (0 == relativePath.Length) ? srcDir.Name : relativePath;
+
+				bool noAlpha = false;
+
+				foreach (FileInfo subFile in srcDir.GetFiles())
+				{
+					if ("noalpha.txt" == subFile.Name)
+					{
+						noAlpha = true;
+					}
+					else if ("lq.txt" == subFile.Name)
+					{
+						parameters.TextureQuality = TEXTURE_QUALITY.LOW;
+					}
+					else if ("hq.txt" == subFile.Name)
+					{
+						parameters.TextureQuality = TEXTURE_QUALITY.HIGH;
+					}
+					else if ("notrim.txt" == subFile.Name)
+					{
+						parameters.NoTrim = true;
+					}
+				}
+
+				if (noAlpha)
+				{
+					switch (parameters.TextureQuality)
+					{
+						case TEXTURE_QUALITY.HIGH:
+							parameters.TextureFormat = TextureFormat_NoAlpha_HQ;
+							break;
+						case TEXTURE_QUALITY.LOW:
+							parameters.TextureFormat = TextureFormat_NoAlpha_LQ;
+							break;
+						default:
+							parameters.TextureFormat = TextureFormat_NoAlpha_SQ;
+							break;
+					}
+				}
+				else
+				{
+					switch (parameters.TextureQuality)
+					{
+						case TEXTURE_QUALITY.HIGH:
+							parameters.TextureFormat = TextureFormat_Alpha_HQ;
+							break;
+						case TEXTURE_QUALITY.LOW:
+							parameters.TextureFormat = TextureFormat_Alpha_LQ;
+							break;
+						default:
+							parameters.TextureFormat = TextureFormat_Alpha_SQ;
+							break;
+					}
+				}
+
+				TODOs.Add(parameters);
+			}
+			else
+			{
+				DirectoryInfo[] subDirs = srcDir.GetDirectories();
+
+				foreach (DirectoryInfo subDir in srcDir.GetDirectories())
+				{
+					ScanDirSingleLevelOutput(subDir, dstDir, (0 == relativePath.Length) ? subDir.Name : (relativePath + "-" + subDir.Name));
 				}
 			}
 		}

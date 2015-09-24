@@ -48,5 +48,26 @@ namespace TextureBatchPacker
 				return "";
 			}
 		}
+
+		private static string getPlistFullPath(ConvertionParameters parameters)
+		{
+			string plistFullPath = parameters.DstDir.FullName;
+
+			if (!plistFullPath.EndsWith("\\"))
+			{
+				plistFullPath += "\\";
+			}
+
+			if (null == parameters.PlistFileName)
+			{
+				plistFullPath += parameters.SrcDir.Name;
+			}
+			else
+			{
+				plistFullPath += parameters.PlistFileName;
+			}
+
+			return plistFullPath;
+		}
 	}
 }
