@@ -113,6 +113,7 @@ namespace TextureBatchPacker
 
 			try
 			{
+#if DEBUG
 				string[] newArgs =
 				{
 					"-SLO",
@@ -120,13 +121,17 @@ namespace TextureBatchPacker
 					"-T",
 					"True",
 					"-I",
-					@"E:\Proj\wwii_resource\Res_Input\Packed",
+					@"E:\Proj\wwii_resource\Res_Input\Packed\images\animations",
 					"-O",
 					@"C:\TEMP\out",
 					"-S",
 					"0.5"
 				};
+
 				Args.InvokeMain<TextureBatchPackerArgs>(newArgs);
+#else
+				Args.InvokeMain<TextureBatchPackerArgs>(args);
+#endif
 			}
 			catch (Exception ex)
 			{

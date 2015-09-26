@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace TextureBatchPacker
 {
@@ -402,10 +403,57 @@ namespace TextureBatchPacker
 				sb.AppendLine("------");
 				sb.AppendLine(parameters.SrcDir.FullName);
 				sb.AppendLine(processTP.StandardOutput.ReadToEnd());
-				sb.AppendLine("------");
-				Console.WriteLine(sb.ToString());
+
 				processTP.WaitForExit();
 				processTP.Dispose();
+
+				if (null != parameters.PlistFileName)
+				{
+					string PlistFullPath = getPlistFullPath(parameters);
+					string prefix = parameters.PlistFileName.Substring(0, parameters.PlistFileName.Length - ".plist".Length);
+
+					try
+					{
+						XmlDocument xmlDoc = new XmlDocument();
+
+						xmlDoc.Load(PlistFullPath);
+
+						if (1 == xmlDoc.ChildNodes[2].ChildNodes.Count)
+						{
+							XmlNode rootDicNode = xmlDoc.ChildNodes[2].ChildNodes[0];
+
+							for (int i = 0; i < rootDicNode.ChildNodes.Count; i++)
+							{
+								if ("key" == rootDicNode.ChildNodes[i].Name && "frames" == rootDicNode.ChildNodes[i].InnerText)
+								{
+									XmlNode frameDicNode = rootDicNode.ChildNodes[++i];
+
+									if (null != frameDicNode)
+									{
+										foreach (XmlNode frameSubNode in frameDicNode.ChildNodes)
+										{
+											if ("key" == frameSubNode.Name)
+											{
+												frameSubNode.InnerText = prefix + "-" + frameSubNode.InnerText;
+											}
+										}
+									}
+								}
+							}
+
+							XmlElement modifiedNode = xmlDoc.CreateElement("modified", xmlDoc.NamespaceURI);
+							xmlDoc.DocumentElement.AppendChild(modifiedNode);
+							xmlDoc.Save(PlistFullPath);
+						}
+					}
+					catch (Exception ex)
+					{
+						sb.AppendLine(ex.Message);
+					}
+				}
+
+				sb.AppendLine("------");
+				Console.WriteLine(sb.ToString());
 			}
 		}
 	}
