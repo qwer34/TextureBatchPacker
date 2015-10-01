@@ -22,6 +22,14 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_PNG_565(parameters);
 				case TEXTURE_FORMAT.PNG_INDEXED:
 					return GetTexturePackerArguments_PNG_INDEXED(parameters);
+				case TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA:
+					return GetTexturePackerArguments_PVR_CCZ_TC4_ALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_CCZ_TC4_NOALPHA:
+					return GetTexturePackerArguments_PVR_CCZ_TC4_NOALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_CCZ_TC2_ALPHA:
+					return GetTexturePackerArguments_PVR_CCZ_TC2_ALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_CCZ_TC2_NOALPHA:
+					return GetTexturePackerArguments_PVR_CCZ_TC2_NOALPHA(parameters);
 				case TEXTURE_FORMAT.JPG_888:
 					return GetTexturePackerArguments_JPG_888(parameters);
 				case TEXTURE_FORMAT.JPG_565:

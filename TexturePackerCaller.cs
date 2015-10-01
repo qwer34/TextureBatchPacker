@@ -107,7 +107,7 @@ namespace TextureBatchPacker
 				case PACKING_MODE.IOS:
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA;
-					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_ALPHA;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_NOALPHA;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_NOALPHA;
