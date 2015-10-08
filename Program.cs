@@ -118,10 +118,8 @@ namespace TextureBatchPacker
 				{
 					"-SLO",
 					"True",
-					"-T",
-					"True",
 					"-I",
-					@"E:\Proj\wwii_resource\Res_Input\Packed\images\animations",
+					@"E:\Proj\wwii_resource\Res_Input\Packed\images\animations\effect\pvp_effect",
 					"-O",
 					@"C:\TEMP\out",
 					"-S",

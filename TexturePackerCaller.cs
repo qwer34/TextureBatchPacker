@@ -418,7 +418,7 @@ namespace TextureBatchPacker
 
 						xmlDoc.Load(PlistFullPath);
 
-						if (1 == xmlDoc.ChildNodes[2].ChildNodes.Count)
+						if (4 >= xmlDoc.ChildNodes[2].ChildNodes[0].ChildNodes.Count)
 						{
 							XmlNode rootDicNode = xmlDoc.ChildNodes[2].ChildNodes[0];
 
@@ -441,9 +441,42 @@ namespace TextureBatchPacker
 								}
 							}
 
-							XmlElement modifiedNode = xmlDoc.CreateElement("modified", xmlDoc.NamespaceURI);
-							xmlDoc.DocumentElement.AppendChild(modifiedNode);
+							XmlElement modifiedNode = xmlDoc.CreateElement("key", xmlDoc.NamespaceURI);
+							modifiedNode.InnerText = "Modified";
+							xmlDoc.ChildNodes[2].ChildNodes[0].AppendChild(modifiedNode);
+
+							XmlElement trueNode = xmlDoc.CreateElement("true", xmlDoc.NamespaceURI);
+							xmlDoc.ChildNodes[2].ChildNodes[0].AppendChild(trueNode);
+
 							xmlDoc.Save(PlistFullPath);
+							Thread.Sleep(100);
+
+							byte[] plistContent = null;
+							string plistContentString = null;
+
+							using (FileStream fsPlist = File.OpenRead(PlistFullPath))
+							{
+								FileInfo fiPlist = new FileInfo(PlistFullPath);
+								plistContent = new byte[fiPlist.Length];
+								fsPlist.Read(plistContent, 0, (int)fiPlist.Length);
+							}
+
+							if (0xEF == plistContent[0] && 0xBB == plistContent[1] && 0xBF == plistContent[2])
+							{
+								plistContentString = Encoding.UTF8.GetString(plistContent, 3, plistContent.Length - 3).Replace("1.0.dtd\"[]>", "1.0.dtd\">");
+							}
+							else
+							{
+								plistContentString = Encoding.UTF8.GetString(plistContent).Replace("1.0.dtd\"[]>", "1.0.dtd\">");
+							}
+
+							plistContent = Encoding.UTF8.GetBytes(plistContentString);
+
+							using (FileStream fsPlist = File.Create(PlistFullPath))
+							{
+								fsPlist.Write(plistContent, 0, plistContent.Length);
+								fsPlist.Flush();
+							}
 						}
 					}
 					catch (Exception ex)
