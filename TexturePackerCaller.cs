@@ -346,7 +346,7 @@ namespace TextureBatchPacker
 
 				foreach (DirectoryInfo subDir in srcDir.GetDirectories())
 				{
-					ScanDirSingleLevelOutput(subDir, dstDir, (0 == relativePath.Length) ? subDir.Name : (relativePath + "-" + subDir.Name));
+					ScanDirSingleLevelOutput(subDir, dstDir, (0 == relativePath.Length) ? subDir.Name : (relativePath + "__" + subDir.Name));
 				}
 			}
 		}
@@ -434,7 +434,7 @@ namespace TextureBatchPacker
 										{
 											if ("key" == frameSubNode.Name)
 											{
-												frameSubNode.InnerText = prefix + "-" + frameSubNode.InnerText;
+												frameSubNode.InnerText = prefix + "__" + frameSubNode.InnerText;
 											}
 										}
 									}
