@@ -15,6 +15,7 @@ namespace TextureBatchPacker
 		public enum PACKING_MODE
 		{
 			EDITOR = 0,
+			DESKTOP,
 			IOS,
 			ANDROID,
 			END_OF_ENUM
@@ -33,10 +34,18 @@ namespace TextureBatchPacker
 			PVR_CCZ_TC2_NOALPHA,
 			PVR_CCZ_4444,
 			PVR_CCZ_565,
+			PVR_TC4_ALPHA,
+			PVR_TC4_NOALPHA,
+			PVR_TC2_ALPHA,
+			PVR_TC2_NOALPHA,
+			PVR_4444,
+			PVR_565,
 			JPG_888,
 			JPG_565,
 			WEBP_8888,
 			WEBP_888,
+			WEBP_4444,
+			WEBP_565,
 			PKM,
 			END_OF_ENUM
 		};
@@ -104,24 +113,32 @@ namespace TextureBatchPacker
 
 			switch (PackingMode)
 			{
+				case PACKING_MODE.DESKTOP:
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_4444;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_4444;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_565;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.WEBP_565;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.WEBP_565;
+					break;
 				case PACKING_MODE.IOS:
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
-					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA;
-					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_ALPHA;
-					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
-					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PVR_CCZ_TC4_NOALPHA;
-					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PVR_CCZ_TC2_NOALPHA;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_TC4_ALPHA;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_TC2_ALPHA;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_565;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PVR_TC4_NOALPHA;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PVR_TC2_NOALPHA;
 					break;
 				case PACKING_MODE.ANDROID:
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
-					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_CCZ_4444;
-					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_CCZ_4444;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_4444;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_4444;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PKM;
 					break;
 				default:
-					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.JPG_888;

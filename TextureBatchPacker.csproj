@@ -52,6 +52,7 @@
     <Compile Include="TexturePackerCallerArguments_JPG.cs" />
     <Compile Include="TexturePackerCallerArguments_PKM.cs" />
     <Compile Include="TexturePackerCallerArguments_PNG.cs" />
+    <Compile Include="TexturePackerCallerArguments_PVR.cs" />
     <Compile Include="TexturePackerCallerArguments_PVR_CCZ.cs" />
     <Compile Include="TexturePackerCallerArguments_WEBP.cs" />
   </ItemGroup>

@@ -22,6 +22,7 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_PNG_565(parameters);
 				case TEXTURE_FORMAT.PNG_INDEXED:
 					return GetTexturePackerArguments_PNG_INDEXED(parameters);
+
 				case TEXTURE_FORMAT.PVR_CCZ_TC4_ALPHA:
 					return GetTexturePackerArguments_PVR_CCZ_TC4_ALPHA(parameters);
 				case TEXTURE_FORMAT.PVR_CCZ_TC4_NOALPHA:
@@ -34,14 +35,34 @@ namespace TextureBatchPacker
 					return GetTexturePackerArguments_PVR_CCZ_4444(parameters);
 				case TEXTURE_FORMAT.PVR_CCZ_565:
 					return GetTexturePackerArguments_PVR_CCZ_565(parameters);
+
+				case TEXTURE_FORMAT.PVR_TC4_ALPHA:
+					return GetTexturePackerArguments_PVR_TC4_ALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_TC4_NOALPHA:
+					return GetTexturePackerArguments_PVR_TC4_NOALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_TC2_ALPHA:
+					return GetTexturePackerArguments_PVR_TC2_ALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_TC2_NOALPHA:
+					return GetTexturePackerArguments_PVR_TC2_NOALPHA(parameters);
+				case TEXTURE_FORMAT.PVR_4444:
+					return GetTexturePackerArguments_PVR_4444(parameters);
+				case TEXTURE_FORMAT.PVR_565:
+					return GetTexturePackerArguments_PVR_565(parameters);
+
 				case TEXTURE_FORMAT.JPG_888:
 					return GetTexturePackerArguments_JPG_888(parameters);
 				case TEXTURE_FORMAT.JPG_565:
 					return GetTexturePackerArguments_JPG_565(parameters);
+
 				case TEXTURE_FORMAT.WEBP_8888:
 					return GetTexturePackerArguments_WEBP_8888(parameters);
 				case TEXTURE_FORMAT.WEBP_888:
 					return GetTexturePackerArguments_WEBP_888(parameters);
+				case TEXTURE_FORMAT.WEBP_4444:
+					return GetTexturePackerArguments_WEBP_4444(parameters);
+				case TEXTURE_FORMAT.WEBP_565:
+					return GetTexturePackerArguments_WEBP_565(parameters);
+
 				case TEXTURE_FORMAT.PKM:
 					return GetTexturePackerArguments_PKM(parameters);
 				default:

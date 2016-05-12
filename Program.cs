@@ -22,7 +22,7 @@ namespace TextureBatchPacker
 		[HelpHook, ArgShortcut("--version"), ArgDescription("(--version) Print the version info.")]
 		public bool ShowVersion { get; set; }
 
-		[ArgDefaultValue("Editor"), ArgDescription("Packing mode - Editor, iOS, Android.")]
+		[ArgDefaultValue("Editor"), ArgDescription("Packing mode - Editor, Desktop, iOS, Android.")]
 		public string Mode { get; set; }
 
 		[ArgDefaultValue(1.0), ArgDescription("Scale factor.")]
@@ -54,6 +54,9 @@ namespace TextureBatchPacker
 
 			switch (strModeLower)
 			{
+				case "desktop":
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.DESKTOP, Scale, TrimSpriteNames, SingleLevelOutput);
+					break;
 				case "ios":
 					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;

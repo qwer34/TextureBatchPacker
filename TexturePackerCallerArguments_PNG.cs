@@ -15,7 +15,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA8888 --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -24,7 +24,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA8888 --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -41,7 +41,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA4444 --dither-type FloydSteinbergAlpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA4444 --dither-type FloydSteinbergAlpha --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -50,7 +50,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA4444 --dither-type FloydSteinbergAlpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGBA4444 --dither-type FloydSteinbergAlpha --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -67,7 +67,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB888 --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -76,7 +76,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB888 --premultiply-alpha --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -93,7 +93,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB565 --premultiply-alpha --dither-type FloydSteinberg --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB565 --dither-type FloydSteinberg --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -102,7 +102,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB565 --premultiply-alpha --dither-type FloydSteinberg --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt RGB565 --dither-type FloydSteinberg --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -119,7 +119,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt INDEXED --dither-type PngQuantHigh --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png8 --png-opt-level 1 --dpi 72 --dither-type PngQuantHigh --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -128,7 +128,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d --data \"{0}\" {1}--texture-format png --png-opt-level 1 --dpi 72 --opt INDEXED --dither-type PngQuantHigh --max-size 16384 --size-constraints AnySize --force-word-aligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-x --data \"{0}\" {1}--texture-format png8 --png-opt-level 1 --dpi 72 --dither-type PngQuantHigh --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 2 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
