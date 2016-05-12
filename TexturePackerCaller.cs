@@ -403,7 +403,7 @@ namespace TextureBatchPacker
 				Process processTP = new Process();
 
 				processTP.StartInfo.FileName = "TexturePacker.exe";
-				processTP.StartInfo.Arguments = GetTexturePackerArguments(parameters);
+				processTP.StartInfo.Arguments = "--quiet " + GetTexturePackerArguments(parameters);
 
 				//将cmd的标准输入和输出全部重定向到.NET的程序里
 				processTP.StartInfo.UseShellExecute = false; //此处必须为false否则引发异常
