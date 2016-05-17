@@ -15,7 +15,7 @@ namespace TextureBatchPacker
 				case TEXTURE_QUALITY.HIGH:
 					return 86;	// 高质量定义为无损
 				case TEXTURE_QUALITY.LOW:
-					return 56;
+					return 60;
 				default:
 					return 72;
 			}
