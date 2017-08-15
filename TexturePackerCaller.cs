@@ -55,6 +55,7 @@ namespace TextureBatchPacker
 			LOW = 0,
 			STANDARD,
 			HIGH,
+			SFX,
 			END_OF_ENUM
 		};
 
@@ -96,9 +97,11 @@ namespace TextureBatchPacker
 
 		private static readonly int ProcessorCount = Environment.ProcessorCount;
 		private static string[] ConverterLocks;
+		private TEXTURE_FORMAT TextureFormat_Alpha_SFX;
 		private TEXTURE_FORMAT TextureFormat_Alpha_HQ;
 		private TEXTURE_FORMAT TextureFormat_Alpha_SQ;
 		private TEXTURE_FORMAT TextureFormat_Alpha_LQ;
+		private TEXTURE_FORMAT TextureFormat_NoAlpha_SFX;
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_HQ;
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_SQ;
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_LQ;
@@ -114,33 +117,41 @@ namespace TextureBatchPacker
 			switch (PackingMode)
 			{
 				case PACKING_MODE.DESKTOP:
+					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_8888;
+					TextureFormat_NoAlpha_SFX = TEXTURE_FORMAT.WEBP_888;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_888;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.WEBP_888;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.WEBP_888;
 					break;
 				case PACKING_MODE.IOS:
+					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.WEBP_8888;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PVR_TC4_ALPHA;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PVR_TC2_ALPHA;
+					TextureFormat_NoAlpha_SFX = TEXTURE_FORMAT.PVR_TC2_NOALPHA;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.WEBP_565;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PVR_TC4_NOALPHA;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PVR_TC2_NOALPHA;
 					break;
 				case PACKING_MODE.ANDROID:
+					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.WEBP_4444;
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.WEBP_4444;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.WEBP_4444;
+					TextureFormat_NoAlpha_SFX = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PKM;
 					break;
 				default:
+					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PNG_INDEXED;
 					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PNG_INDEXED;
+					TextureFormat_NoAlpha_SFX = TEXTURE_FORMAT.JPG_888;
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.JPG_888;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.JPG_888;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.JPG_888;
@@ -213,6 +224,10 @@ namespace TextureBatchPacker
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.HIGH;
 					}
+					else if ("sfx.txt" == subFile.Name)
+					{
+						parameters.TextureQuality = TEXTURE_QUALITY.SFX;
+					}
 					else if ("notrim.txt" == subFile.Name)
 					{
 						parameters.NoTrim = true;
@@ -223,6 +238,9 @@ namespace TextureBatchPacker
 				{
 					switch (parameters.TextureQuality)
 					{
+						case TEXTURE_QUALITY.SFX:
+							parameters.TextureFormat = TextureFormat_NoAlpha_SFX;
+							break;
 						case TEXTURE_QUALITY.HIGH:
 							parameters.TextureFormat = TextureFormat_NoAlpha_HQ;
 							break;
@@ -238,6 +256,9 @@ namespace TextureBatchPacker
 				{
 					switch (parameters.TextureQuality)
 					{
+						case TEXTURE_QUALITY.SFX:
+							parameters.TextureFormat = TextureFormat_Alpha_SFX;
+							break;
 						case TEXTURE_QUALITY.HIGH:
 							parameters.TextureFormat = TextureFormat_Alpha_HQ;
 							break;
@@ -318,6 +339,10 @@ namespace TextureBatchPacker
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.HIGH;
 					}
+					else if ("sfx.txt" == subFile.Name)
+					{
+						parameters.TextureQuality = TEXTURE_QUALITY.SFX;
+					}
 					else if ("notrim.txt" == subFile.Name)
 					{
 						parameters.NoTrim = true;
@@ -328,6 +353,9 @@ namespace TextureBatchPacker
 				{
 					switch (parameters.TextureQuality)
 					{
+						case TEXTURE_QUALITY.SFX:
+							parameters.TextureFormat = TextureFormat_NoAlpha_SFX;
+							break;
 						case TEXTURE_QUALITY.HIGH:
 							parameters.TextureFormat = TextureFormat_NoAlpha_HQ;
 							break;
@@ -343,6 +371,9 @@ namespace TextureBatchPacker
 				{
 					switch (parameters.TextureQuality)
 					{
+						case TEXTURE_QUALITY.SFX:
+							parameters.TextureFormat = TextureFormat_Alpha_SFX;
+							break;
 						case TEXTURE_QUALITY.HIGH:
 							parameters.TextureFormat = TextureFormat_Alpha_HQ;
 							break;

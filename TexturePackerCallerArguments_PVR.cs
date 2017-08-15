@@ -12,6 +12,8 @@ namespace TextureBatchPacker
 		{
 			switch (parameters.TextureQuality)
 			{
+				case TEXTURE_QUALITY.SFX:
+					return "normal";
 				case TEXTURE_QUALITY.HIGH:
 					return "best";
 				case TEXTURE_QUALITY.LOW:
