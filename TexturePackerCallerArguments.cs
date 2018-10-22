@@ -49,6 +49,8 @@ namespace TextureBatchPacker
 				case TEXTURE_FORMAT.PVR_565:
 					return GetTexturePackerArguments_PVR_565(parameters);
 
+				case TEXTURE_FORMAT.JPG_ULTRA_HIGH:
+					return GetTexturePackerArguments_JPG_ULTRA_HIGH(parameters);
 				case TEXTURE_FORMAT.JPG_888:
 					return GetTexturePackerArguments_JPG_888(parameters);
 				case TEXTURE_FORMAT.JPG_565:

@@ -63,6 +63,9 @@ namespace TextureBatchPacker
 				case "android":
 					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;
+				case "raw":
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.RAW, Scale, TrimSpriteNames, SingleLevelOutput);
+					break;
 				default:
 					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale, TrimSpriteNames, SingleLevelOutput);
 					break;

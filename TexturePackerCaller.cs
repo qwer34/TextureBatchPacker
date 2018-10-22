@@ -18,6 +18,7 @@ namespace TextureBatchPacker
 			DESKTOP,
 			IOS,
 			ANDROID,
+			RAW,
 			END_OF_ENUM
 		};
 
@@ -40,6 +41,7 @@ namespace TextureBatchPacker
 			PVR_TC2_NOALPHA,
 			PVR_4444,
 			PVR_565,
+			JPG_ULTRA_HIGH,
 			JPG_888,
 			JPG_565,
 			WEBP_8888,
@@ -145,6 +147,16 @@ namespace TextureBatchPacker
 					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.PKM;
 					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.PKM;
+					break;
+				case PACKING_MODE.RAW:
+					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_Alpha_HQ = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_Alpha_SQ = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_Alpha_LQ = TEXTURE_FORMAT.PNG_8888;
+					TextureFormat_NoAlpha_SFX = TEXTURE_FORMAT.JPG_ULTRA_HIGH;
+					TextureFormat_NoAlpha_HQ = TEXTURE_FORMAT.JPG_ULTRA_HIGH;
+					TextureFormat_NoAlpha_SQ = TEXTURE_FORMAT.JPG_ULTRA_HIGH;
+					TextureFormat_NoAlpha_LQ = TEXTURE_FORMAT.JPG_ULTRA_HIGH;
 					break;
 				default:
 					TextureFormat_Alpha_SFX = TEXTURE_FORMAT.PNG_INDEXED;
