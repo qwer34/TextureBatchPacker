@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PowerArgs;
-using PowerArgs.Cli;
-using System.Windows.Forms;
-using System.IO;
+﻿using PowerArgs;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace TextureBatchPacker
 {
-	class TextureBatchPackerArgs
+	internal class TextureBatchPackerArgs
 	{
 		[HelpHook, ArgShortcut("?"), ArgDescription("Shows this help.")]
 		public bool Help { get; set; }
@@ -77,9 +72,9 @@ namespace TextureBatchPacker
 		}
 	}
 
-	class Program
+	internal class Program
 	{
-		static int Main(string[] args)
+		private static int Main(string[] args)
 		{
 			Console.WriteLine("{0} Ver. {1}", Application.ProductName, Application.ProductVersion);
 			Console.WriteLine("Powered by Xin Zhang");

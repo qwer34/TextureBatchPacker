@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TextureBatchPacker
+﻿namespace TextureBatchPacker
 {
-	partial class TexturePackerCaller
+	internal partial class TexturePackerCaller
 	{
 		private static int GetJpgQuality(ConvertionParameters parameters)
 		{
@@ -30,7 +24,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format jpg --jpg-quality {2} --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 1 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{4}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format jpg --jpg-quality {2} --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --force-squared --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 1 --inner-padding 0 --extrude 0 --disable-rotation --trim-mode None \"{4}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					100,
@@ -40,7 +34,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format jpg --jpg-quality {2} --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 1 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{4}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format jpg --jpg-quality {2} --dpi 72 --opt RGB888 --max-size 4096 --size-constraints WordAligned --force-squared --scale {3} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 1 --inner-padding 0 --extrude 0 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{4}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					100,

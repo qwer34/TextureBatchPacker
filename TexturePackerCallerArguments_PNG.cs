@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TextureBatchPacker
+﻿namespace TextureBatchPacker
 {
-	partial class TexturePackerCaller
+	internal partial class TexturePackerCaller
 	{
 		private string GetTexturePackerArguments_PNG_8888(ConvertionParameters parameters)
 		{
@@ -15,7 +9,7 @@ namespace TextureBatchPacker
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --force-squared --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -24,7 +18,7 @@ namespace TextureBatchPacker
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --force-squared --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,

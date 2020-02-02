@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TextureBatchPacker
+﻿namespace TextureBatchPacker
 {
-	partial class TexturePackerCaller
+	internal partial class TexturePackerCaller
 	{
 		private static int GetWebpQuality(ConvertionParameters parameters)
 		{
@@ -15,7 +9,7 @@ namespace TextureBatchPacker
 				case TEXTURE_QUALITY.SFX:
 					return 60;
 				case TEXTURE_QUALITY.HIGH:
-					return 86;	// 高质量定义为无损
+					return 86;  // 高质量定义为无损
 				case TEXTURE_QUALITY.LOW:
 					return 60;
 				default:

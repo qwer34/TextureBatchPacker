@@ -5,12 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace TextureBatchPacker
 {
-	partial class TexturePackerCaller
+	internal partial class TexturePackerCaller
 	{
 		public enum PACKING_MODE
 		{
@@ -61,7 +60,7 @@ namespace TextureBatchPacker
 			END_OF_ENUM
 		};
 
-		class ConvertionParameters
+		private class ConvertionParameters
 		{
 			public DirectoryInfo SrcDir;
 			public DirectoryInfo DstDir;
