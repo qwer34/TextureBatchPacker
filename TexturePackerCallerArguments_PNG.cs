@@ -9,7 +9,7 @@
 			if (parameters.NoTrim)
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 2048 --size-constraints WordAligned --multipack --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --disable-rotation --trim-mode None \"{3}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --disable-rotation --trim-mode None \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
@@ -18,7 +18,7 @@
 			else
 			{
 				argument = string.Format(
-					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 2048 --size-constraints WordAligned --multipack --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
+					"--format cocos2d-v2 --data \"{0}\" {1}--texture-format png --png-opt-level 0 --dpi 72 --opt RGBA8888 --max-size 4096 --size-constraints WordAligned --scale {2} --scale-mode Smooth --algorithm MaxRects --maxrects-heuristics Best --pack-mode Best --border-padding 0 --shape-padding 0 --inner-padding 0 --extrude 1 --enable-rotation --trim-mode Trim --trim-threshold 2 \"{3}\"",
 					getPlistFullPath(parameters),
 					GetTrimSpriteNamesArgument(),
 					parameters.Scale,
