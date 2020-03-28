@@ -149,3 +149,4 @@ tests/cpp-tests/Resources/audio
 
 *.TMP
 *.userprefs
+*.user

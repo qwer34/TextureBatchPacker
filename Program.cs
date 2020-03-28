@@ -23,10 +23,12 @@ namespace TextureBatchPacker
 		[ArgDefaultValue(1.0), ArgDescription("Scale factor.")]
 		public float Scale { get; set; }
 
-		[ArgDefaultValue(false), ArgDescription("Removes image file extensions from the sprite names - e.g. .png, .tga.")]
+		[ArgDefaultValue(false),
+		 ArgDescription("Removes image file extensions from the sprite names - e.g. .png, .tga.")]
 		public bool TrimSpriteNames { get; set; }
 
-		[ArgDefaultValue(false), ArgShortcut("SLO"), ArgDescription("All PLISTs and sprite sheets will be exported to single direcory.")]
+		[ArgDefaultValue(false), ArgShortcut("SLO"),
+		 ArgDescription("All PLISTs and sprite sheets will be exported to single direcory.")]
 		public bool SingleLevelOutput { get; set; }
 
 		[ArgRequired(PromptIfMissing = false), ArgExistingDirectory, ArgDescription("The input directory.")]
@@ -50,19 +52,24 @@ namespace TextureBatchPacker
 			switch (strModeLower)
 			{
 				case "desktop":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.DESKTOP, Scale, TrimSpriteNames, SingleLevelOutput);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.DESKTOP, Scale,
+						TrimSpriteNames, SingleLevelOutput);
 					break;
 				case "ios":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale, TrimSpriteNames, SingleLevelOutput);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.IOS, Scale,
+						TrimSpriteNames, SingleLevelOutput);
 					break;
 				case "android":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale, TrimSpriteNames, SingleLevelOutput);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.ANDROID, Scale,
+						TrimSpriteNames, SingleLevelOutput);
 					break;
 				case "raw":
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.RAW, Scale, TrimSpriteNames, SingleLevelOutput);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.RAW, Scale,
+						TrimSpriteNames, SingleLevelOutput);
 					break;
 				default:
-					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale, TrimSpriteNames, SingleLevelOutput);
+					texturePackerCaller = new TexturePackerCaller(TexturePackerCaller.PACKING_MODE.EDITOR, Scale,
+						TrimSpriteNames, SingleLevelOutput);
 					break;
 			}
 
@@ -117,14 +124,9 @@ namespace TextureBatchPacker
 #if DEBUG
 				string[] newArgs =
 				{
-					"-SLO",
-					"True",
-					"-I",
-					@"E:\Proj\wwii_resource\Res_Input\Packed\images\animations\effect\pvp_effect",
-					"-O",
-					@"C:\TEMP\out",
-					"-S",
-					"0.5"
+					"-SLO", "True", "-I",
+					@"E:\Proj\wwii_resource\Res_Input\Packed\images\animations\effect\pvp_effect", "-O",
+					@"C:\TEMP\out", "-S", "0.5"
 				};
 
 				Args.InvokeMain<TextureBatchPackerArgs>(newArgs);

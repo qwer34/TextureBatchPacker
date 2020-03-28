@@ -68,19 +68,15 @@ namespace TextureBatchPacker
 			public float Scale;
 			public TEXTURE_QUALITY TextureQuality;
 			public bool NoTrim;
+			public bool Forcesquared = false;
 
 			public int LockNumber = -1;
 
 			public string PlistFileName = null;
 
-			public ConvertionParameters(
-				DirectoryInfo srcDir,
-				DirectoryInfo dstDir,
-				TEXTURE_FORMAT textureFormat = TEXTURE_FORMAT.PNG_INDEXED,
-				float scale = 1.0f,
-				TEXTURE_QUALITY textureQuality = TEXTURE_QUALITY.STANDARD,
-				bool noTrim = false
-				)
+			public ConvertionParameters(DirectoryInfo srcDir, DirectoryInfo dstDir,
+				TEXTURE_FORMAT textureFormat = TEXTURE_FORMAT.PNG_INDEXED, float scale = 1.0f,
+				TEXTURE_QUALITY textureQuality = TEXTURE_QUALITY.STANDARD, bool noTrim = false)
 			{
 				this.SrcDir = srcDir;
 				this.DstDir = dstDir;
@@ -97,7 +93,7 @@ namespace TextureBatchPacker
 		public bool SingleLevelOutput { get; set; }
 
 		private static readonly int ProcessorCount = Environment.ProcessorCount;
-		private static string[] ConverterLocks;
+		private static string[] _converterLocks;
 		private TEXTURE_FORMAT TextureFormat_Alpha_SFX;
 		private TEXTURE_FORMAT TextureFormat_Alpha_HQ;
 		private TEXTURE_FORMAT TextureFormat_Alpha_SQ;
@@ -108,7 +104,8 @@ namespace TextureBatchPacker
 		private TEXTURE_FORMAT TextureFormat_NoAlpha_LQ;
 		private HashSet<ConvertionParameters> TODOs = new HashSet<ConvertionParameters>();
 
-		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1, bool trimSpriteNames = false, bool singleLevelOutput = false)
+		public TexturePackerCaller(PACKING_MODE packingMode = PACKING_MODE.EDITOR, float scale = 1,
+			bool trimSpriteNames = false, bool singleLevelOutput = false)
 		{
 			PackingMode = packingMode;
 			Scale = scale;
@@ -169,13 +166,13 @@ namespace TextureBatchPacker
 					break;
 			}
 
-			if (null == ConverterLocks)
+			if (null == _converterLocks)
 			{
-				ConverterLocks = new string[ProcessorCount];
+				_converterLocks = new string[ProcessorCount];
 
 				for (int i = 0; i < ProcessorCount; i++)
 				{
-					ConverterLocks[i] = Guid.NewGuid().ToString();
+					_converterLocks[i] = Guid.NewGuid().ToString();
 				}
 			}
 		}
@@ -188,14 +185,14 @@ namespace TextureBatchPacker
 				return;
 			}
 
-			string srcDirFullPath = srcDir.FullName;
+			var srcDirFullPath = srcDir.FullName;
 
 			if (!srcDirFullPath.EndsWith("\\"))
 			{
 				srcDirFullPath += "\\";
 			}
 
-			string dstDirFullPath = dstDir.FullName;
+			var dstDirFullPath = dstDir.FullName;
 
 			if (!dstDirFullPath.EndsWith("\\"))
 			{
@@ -214,35 +211,61 @@ namespace TextureBatchPacker
 				}
 
 				ConvertionParameters parameters = new ConvertionParameters(
-					srcDir,
-					dstDir,
-					TextureFormat_Alpha_SQ,
-					Scale);
+					srcDir, dstDir, TextureFormat_Alpha_SQ, Scale);
 
-				bool noAlpha = false;
+				var noAlpha = false;
+				var images = 0;
+				var jpegOnly = true;
 
 				foreach (FileInfo subFile in srcDir.GetFiles())
 				{
-					if ("noalpha.txt" == subFile.Name)
+					var lowerCasedName = subFile.Name.ToLower();
+					var lowerCasedExtName = subFile.Extension.ToLower();
+
+					if (".bmp" == lowerCasedExtName || ".jpg" == lowerCasedExtName || ".jpeg" == lowerCasedExtName ||
+						".png" == lowerCasedExtName || ".gif" == lowerCasedExtName || ".webp" == lowerCasedExtName ||
+						".psd" == lowerCasedExtName)
+					{
+						++images;
+
+						if (".jpg" != lowerCasedExtName && ".jpeg" != lowerCasedExtName)
+						{
+							jpegOnly = false;
+						}
+					}
+					else if ("noalpha.txt" == lowerCasedName)
 					{
 						noAlpha = true;
 					}
-					else if ("lq.txt" == subFile.Name)
+					else if ("lq.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.LOW;
 					}
-					else if ("hq.txt" == subFile.Name)
+					else if ("hq.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.HIGH;
 					}
-					else if ("sfx.txt" == subFile.Name)
+					else if ("sfx.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.SFX;
 					}
-					else if ("notrim.txt" == subFile.Name)
+					else if ("notrim.txt" == lowerCasedName)
 					{
 						parameters.NoTrim = true;
 					}
+				}
+
+				if (images <= 0)
+				{
+					Console.WriteLine(srcDir.Name + " 下没有任何图片文件。");
+					return;
+				}
+
+				parameters.Forcesquared = (1 != images);
+
+				if (jpegOnly)
+				{
+					noAlpha = true;
 				}
 
 				if (noAlpha)
@@ -308,7 +331,7 @@ namespace TextureBatchPacker
 
 		public void ScanDirSingleLevelOutput(DirectoryInfo srcDir, DirectoryInfo dstDir, string relativePath = "")
 		{
-			string srcDirFullPath = srcDir.FullName;
+			var srcDirFullPath = srcDir.FullName;
 
 			if (!srcDirFullPath.EndsWith("\\"))
 			{
@@ -327,37 +350,63 @@ namespace TextureBatchPacker
 			else if (srcDir.Name.EndsWith(".plist"))
 			{
 				ConvertionParameters parameters = new ConvertionParameters(
-					srcDir,
-					dstDir,
-					TextureFormat_Alpha_SQ,
-					Scale);
+					srcDir, dstDir, TextureFormat_Alpha_SQ, Scale);
 
 				parameters.PlistFileName = (0 == relativePath.Length) ? srcDir.Name : relativePath;
 
-				bool noAlpha = false;
+				var noAlpha = false;
+				var images = 0;
+				var jpegOnly = true;
 
 				foreach (FileInfo subFile in srcDir.GetFiles())
 				{
-					if ("noalpha.txt" == subFile.Name)
+					var lowerCasedName = subFile.Name.ToLower();
+					var lowerCasedExtName = subFile.Extension.ToLower();
+
+					if (".bmp" == lowerCasedExtName || ".jpg" == lowerCasedExtName || ".jpeg" == lowerCasedExtName ||
+						".png" == lowerCasedExtName || ".gif" == lowerCasedExtName || ".webp" == lowerCasedExtName ||
+						".psd" == lowerCasedExtName)
+					{
+						++images;
+
+						if (".jpg" != lowerCasedExtName && ".jpeg" != lowerCasedExtName)
+						{
+							jpegOnly = false;
+						}
+					}
+					else if ("noalpha.txt" == lowerCasedName)
 					{
 						noAlpha = true;
 					}
-					else if ("lq.txt" == subFile.Name)
+					else if ("lq.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.LOW;
 					}
-					else if ("hq.txt" == subFile.Name)
+					else if ("hq.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.HIGH;
 					}
-					else if ("sfx.txt" == subFile.Name)
+					else if ("sfx.txt" == lowerCasedName)
 					{
 						parameters.TextureQuality = TEXTURE_QUALITY.SFX;
 					}
-					else if ("notrim.txt" == subFile.Name)
+					else if ("notrim.txt" == lowerCasedName)
 					{
 						parameters.NoTrim = true;
 					}
+				}
+
+				if (images <= 0)
+				{
+					Console.WriteLine(srcDir.Name + " 下没有任何图片文件。");
+					return;
+				}
+
+				parameters.Forcesquared = (1 != images);
+
+				if (jpegOnly)
+				{
+					noAlpha = true;
 				}
 
 				if (noAlpha)
@@ -405,7 +454,8 @@ namespace TextureBatchPacker
 
 				foreach (DirectoryInfo subDir in srcDir.GetDirectories())
 				{
-					ScanDirSingleLevelOutput(subDir, dstDir, (0 == relativePath.Length) ? subDir.Name : (relativePath + "__" + subDir.Name));
+					ScanDirSingleLevelOutput(subDir, dstDir,
+						(0 == relativePath.Length) ? subDir.Name : (relativePath + "__" + subDir.Name));
 				}
 			}
 		}
@@ -436,11 +486,11 @@ namespace TextureBatchPacker
 
 		private void Pack(object convertionParameters)
 		{
-			ConvertionParameters parameters = (ConvertionParameters)convertionParameters;
+			ConvertionParameters parameters = (ConvertionParameters) convertionParameters;
 
 			Thread.Sleep(20);
 
-			lock (ConverterLocks[parameters.LockNumber])
+			lock (_converterLocks[parameters.LockNumber])
 			{
 				Process processTP = new Process();
 
@@ -469,7 +519,8 @@ namespace TextureBatchPacker
 				if (null != parameters.PlistFileName)
 				{
 					string PlistFullPath = getPlistFullPath(parameters);
-					string prefix = parameters.PlistFileName.Substring(0, parameters.PlistFileName.Length - ".plist".Length);
+					string prefix =
+						parameters.PlistFileName.Substring(0, parameters.PlistFileName.Length - ".plist".Length);
 
 					try
 					{
@@ -483,7 +534,8 @@ namespace TextureBatchPacker
 
 							for (int i = 0; i < rootDicNode.ChildNodes.Count; i++)
 							{
-								if ("key" == rootDicNode.ChildNodes[i].Name && "frames" == rootDicNode.ChildNodes[i].InnerText)
+								if ("key" == rootDicNode.ChildNodes[i].Name &&
+									"frames" == rootDicNode.ChildNodes[i].InnerText)
 								{
 									XmlNode frameDicNode = rootDicNode.ChildNodes[++i];
 
@@ -517,16 +569,18 @@ namespace TextureBatchPacker
 							{
 								FileInfo fiPlist = new FileInfo(PlistFullPath);
 								plistContent = new byte[fiPlist.Length];
-								fsPlist.Read(plistContent, 0, (int)fiPlist.Length);
+								fsPlist.Read(plistContent, 0, (int) fiPlist.Length);
 							}
 
 							if (0xEF == plistContent[0] && 0xBB == plistContent[1] && 0xBF == plistContent[2])
 							{
-								plistContentString = Encoding.UTF8.GetString(plistContent, 3, plistContent.Length - 3).Replace("1.0.dtd\"[]>", "1.0.dtd\">");
+								plistContentString = Encoding.UTF8.GetString(plistContent, 3, plistContent.Length - 3)
+									.Replace("1.0.dtd\"[]>", "1.0.dtd\">");
 							}
 							else
 							{
-								plistContentString = Encoding.UTF8.GetString(plistContent).Replace("1.0.dtd\"[]>", "1.0.dtd\">");
+								plistContentString = Encoding.UTF8.GetString(plistContent)
+									.Replace("1.0.dtd\"[]>", "1.0.dtd\">");
 							}
 
 							plistContent = Encoding.UTF8.GetBytes(plistContentString);
